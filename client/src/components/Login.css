@@ -1,0 +1,10 @@
+body {
+	margin: 0;
+	padding: 0;
+	background: #1565c0;
+}
+#root {
+	height: 100%;
+    float: left;
+    width: 100%;
+}
