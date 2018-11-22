@@ -12,6 +12,11 @@ import {geolocated} from 'react-geolocated';
 const  currentLoc = require('../../assets/images/current-loc.png');
 const  iconMarker = require('../../assets/images/scooter-icon.png');
 const  userIcon = require('../../assets/images/user.png');
+const  battery25 = require('../../assets/images/battery25.png');
+const  battery50 = require('../../assets/images/battery50.png');
+const  battery75 = require('../../assets/images/battery75.png');
+const  batteryFull = require('../../assets/images/batteryFull.png');
+const  batteryPlugged = require('../../assets/images/batteryPlugged.png');
 
 class GoogleMapsContainer extends React.Component {
 
@@ -176,7 +181,13 @@ class GoogleMapsContainer extends React.Component {
       {data.map( (scooter, key) => 
           <Marker
             onClick = { this.onMarkerClick }
-            icon= {iconMarker}
+            icon= {scooter.battery < 11 ? batteryPlugged
+               : scooter.battery > 10 && scooter.battery < 26 ? battery25
+               : scooter.battery > 26 && scooter.battery < 51 ? battery50
+               : scooter.battery > 25 && scooter.battery < 76 ? battery75
+               : scooter.battery > 75 && scooter.battery < 100 ? batteryFull
+               : batteryPlugged }
+
             key={`scooter_marker_${scooter.id}`}
             title = { `Battery ${scooter.battery}%` }
             position = {{ lat: parseFloat(scooter.lat), lng: parseFloat(scooter.lng) }}
@@ -188,8 +199,7 @@ class GoogleMapsContainer extends React.Component {
 
       )}
 
-       
-        <InfoWindow
+      <InfoWindow
 
             marker = { this.state.activeMarker }
             visible = { this.state.showingInfoWindow } >
